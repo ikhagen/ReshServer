@@ -1,11 +1,15 @@
 ﻿using System;
 using ReshServer.ReshService;
 using Newtonsoft.Json;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
 
-namespace ReshServer.Services
+namespace ReshServer
 {
     public class ReshRepository
     {
+
         public ReshUnit getUnitById(int id)
         {
             //Kan ikke tro at dette er riktig måte å gjøre det på, med passordet i klartekst og det 
@@ -17,7 +21,7 @@ namespace ReshServer.Services
             ReshUnit unit = client.GetReshUnit(id, true, false, DateTime.Today);
 
             client.Close();
-            return unit;
+            return unit; 
         }
     }
 }
