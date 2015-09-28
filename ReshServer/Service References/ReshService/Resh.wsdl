@@ -1,0 +1,2890 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://register.nhn.no/Resh" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Resh" targetNamespace="http://register.nhn.no/Resh" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IReshService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <http:BasicAuthentication xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsam:Addressing>
+          <wsp:Policy>
+            <wsam:AnonymousResponses />
+          </wsp:Policy>
+        </wsam:Addressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IReshService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:SslTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:BootstrapPolicy>
+                  <wsp:Policy>
+                    <sp:SignedParts>
+                      <sp:Body />
+                      <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                    </sp:SignedParts>
+                    <sp:EncryptedParts>
+                      <sp:Body />
+                    </sp:EncryptedParts>
+                    <sp:TransportBinding>
+                      <wsp:Policy>
+                        <sp:TransportToken>
+                          <wsp:Policy>
+                            <msf:SslTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy" />
+                          </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                          <wsp:Policy>
+                            <sp:Basic256 />
+                          </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                          <wsp:Policy>
+                            <sp:Strict />
+                          </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp />
+                      </wsp:Policy>
+                    </sp:TransportBinding>
+                    <sp:SignedSupportingTokens>
+                      <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                          <wsp:Policy>
+                            <sp:WssUsernameToken10 />
+                          </wsp:Policy>
+                        </sp:UsernameToken>
+                      </wsp:Policy>
+                    </sp:SignedSupportingTokens>
+                    <sp:Wss11>
+                      <wsp:Policy />
+                    </sp:Wss11>
+                    <sp:Trust10>
+                      <wsp:Policy>
+                        <sp:MustSupportIssuedTokens />
+                        <sp:RequireClientEntropy />
+                        <sp:RequireServerEntropy />
+                      </wsp:Policy>
+                    </sp:Trust10>
+                  </wsp:Policy>
+                </sp:BootstrapPolicy>
+              </wsp:Policy>
+            </sp:SecureConversationToken>
+          </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsam:Addressing>
+          <wsp:Policy>
+            <wsam:AnonymousResponses />
+          </wsp:Policy>
+        </wsam:Addressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="BasicHttpBinding_IReshService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <http:BasicAuthentication xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://register.nhn.no/Resh" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" />
+      <xs:import namespace="http://register.nhn.no/CommunicationParty" />
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:import namespace="http://register.nhn.no/RESH" />
+      <xs:element name="CreateDepartment">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="departmentCreate" nillable="true" type="q1:DepartmentCreate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateDepartmentResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="CreateDepartmentResult" nillable="true" type="q2:Department" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateDepartment">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="departmentUpdate" nillable="true" type="q3:DepartmentUpdate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateDepartmentResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MoveDepartment">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+            <xs:element minOccurs="0" name="moveTargetReshId" type="xs:int" />
+            <xs:element minOccurs="0" name="moveTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MoveDepartmentResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateOrganization">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="org" nillable="true" type="q4:OrganizationCreate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateOrganizationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="CreateOrganizationResult" nillable="true" type="q5:Organization" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateOrganization">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="org" nillable="true" type="q6:OrganizationUpdate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateOrganizationResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AdvancedSearch">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="searchParameters" nillable="true" type="q7:ReshSearchParameters" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AdvancedSearchResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://register.nhn.no/CommunicationParty" minOccurs="0" name="AdvancedSearchResult" nillable="true" type="q8:SearchResult" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Search">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="term" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SearchResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q9="http://register.nhn.no/CommunicationParty" minOccurs="0" name="SearchResult" nillable="true" type="q9:SearchResult" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetReshUnit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+            <xs:element minOccurs="0" name="excludeDetails" type="xs:boolean" />
+            <xs:element minOccurs="0" name="includeChildUnits" type="xs:boolean" />
+            <xs:element minOccurs="0" name="treeAtTime" nillable="true" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetReshUnitResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetReshUnitResult" nillable="true" type="q10:ReshUnit" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetReshUnitWithInactiveChildren">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetReshUnitWithInactiveChildrenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetReshUnitWithInactiveChildrenResult" nillable="true" type="q11:ReshUnit" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetTreatmentFacilityTree">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshid" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetTreatmentFacilityTreeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetTreatmentFacilityTreeResult" nillable="true" type="q12:ArrayOfBusinessWithConnectedReshUnits" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="service" nillable="true" type="q13:ServiceCreate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateServiceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="CreateServiceResult" nillable="true" type="q14:Service" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="service" nillable="true" type="q15:ServiceUpdate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateServiceResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ConnectReshUnitToTreatmentFacility">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+            <xs:element minOccurs="0" name="treatmentFacilityOrganizationNumber" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ConnectReshUnitToTreatmentFacilityResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DisconnectReshUnitFromTreatmentFacility">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DisconnectReshUnitFromTreatmentFacilityResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrganizationByOrganizationNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="organizationNumber" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrganizationByOrganizationNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetOrganizationByOrganizationNumberResult" nillable="true" type="q16:Organization" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddCustomAttribute">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+            <xs:element xmlns:q17="http://register.nhn.no/Common" minOccurs="0" name="code" nillable="true" type="q17:Code" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddCustomAttributeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q18="http://register.nhn.no/Common" minOccurs="0" name="AddCustomAttributeResult" nillable="true" type="q18:Code" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveCustomAttribute">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+            <xs:element xmlns:q19="http://register.nhn.no/Common" minOccurs="0" name="code" nillable="true" type="q19:Code" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveCustomAttributeResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetChangeLog">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetChangeLogResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q20="http://register.nhn.no/Common" minOccurs="0" name="GetChangeLogResult" nillable="true" type="q20:ArrayOfEntityLogEntry" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetParentHistoryForReshUnit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetParentHistoryForReshUnitResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetParentHistoryForReshUnitResult" nillable="true" type="q21:ParentHistoryData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllMappingNodes">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllMappingNodesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetAllMappingNodesResult" nillable="true" type="q22:ArrayOfReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="systemId" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetMappingNodeResult" nillable="true" type="q23:ReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNodesUnderReshId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="reshId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNodesUnderReshIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetMappingNodesUnderReshIdResult" nillable="true" type="q24:ArrayOfReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateMappingNode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="systemId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="mappingNodeId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="parentMappingNodeId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="reshId" nillable="true" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateMappingNodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="CreateMappingNodeResult" nillable="true" type="q25:ReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateMappingNode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="updatedData" nillable="true" type="q26:ReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateMappingNodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="UpdateMappingNodeResult" nillable="true" type="q27:ReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteMappingNode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="systemId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="mappingNodeId" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteMappingNodeResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNodeDetail">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="systemId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="mappingNodeId" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMappingNodeDetailResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="GetMappingNodeDetailResult" nillable="true" type="q28:ReshMappingNode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetModifiedReshIds">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetModifiedReshIdsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetModifiedReshIdsResult" nillable="true" type="q29:ArrayOfint" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetModifiedParentLinks">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="date" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetModifiedParentLinksResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q30="http://register.nhn.no/RESH" minOccurs="0" name="GetModifiedParentLinksResult" nillable="true" type="q30:ArrayOfParentLink" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+      <xs:import namespace="http://register.nhn.no/Corporate" />
+      <xs:complexType name="DepartmentCreate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q1:ArrayOfElectronicAddress" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://register.nhn.no/Common" minOccurs="0" name="OrganizationalDesignation" nillable="true" type="q2:Code" />
+          <xs:element minOccurs="0" name="ParentReshId" type="xs:int" />
+          <xs:element xmlns:q3="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q3:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q4="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q4:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q5="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q5:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DepartmentCreate" nillable="true" type="tns:DepartmentCreate" />
+      <xs:complexType name="Department">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ReshUnit">
+            <xs:sequence />
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Department" nillable="true" type="tns:Department" />
+      <xs:complexType name="ReshUnit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Children" nillable="true" type="tns:ArrayOfReshUnit" />
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q6="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q6:ArrayOfElectronicAddress" />
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InternationalNames" nillable="true" type="q7:ArrayOfKeyValueOfCodestringtoqTjEUW" />
+          <xs:element minOccurs="0" name="LastChanged" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrganizationNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="OrganizationReshId" type="xs:int" />
+          <xs:element xmlns:q8="http://register.nhn.no/Common" minOccurs="0" name="OrganizationalDesignation" nillable="true" type="q8:Code" />
+          <xs:element minOccurs="0" name="ParentName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentReshId" nillable="true" type="xs:int" />
+          <xs:element xmlns:q9="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q9:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q10="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q10:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ReshId" type="xs:int" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Services" nillable="true" type="tns:ArrayOfService" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TopOrganizationNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="TopOrganizationReshId" type="xs:int" />
+          <xs:element minOccurs="0" name="TreatmentFacilityOrganizationNumber" nillable="true" type="xs:int" />
+          <xs:element xmlns:q11="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q11:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ReshUnit" nillable="true" type="tns:ReshUnit" />
+      <xs:complexType name="ArrayOfReshUnit">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ReshUnit" nillable="true" type="tns:ReshUnit" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfReshUnit" nillable="true" type="tns:ArrayOfReshUnit" />
+      <xs:complexType name="ArrayOfService">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" nillable="true" type="tns:Service" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfService" nillable="true" type="tns:ArrayOfService" />
+      <xs:complexType name="Service">
+        <xs:sequence>
+          <xs:element xmlns:q12="http://register.nhn.no/Common" minOccurs="0" name="Attributes" nillable="true" type="q12:ArrayOfCode" />
+          <xs:element xmlns:q13="http://register.nhn.no/Common" minOccurs="0" name="Code" nillable="true" type="q13:Code" />
+          <xs:element minOccurs="0" name="OwnerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerReshId" type="xs:int" />
+          <xs:element minOccurs="0" name="ReshEditable" type="xs:boolean" />
+          <xs:element xmlns:q14="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q14:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Service" nillable="true" type="tns:Service" />
+      <xs:complexType name="Organization">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ReshUnit">
+            <xs:sequence>
+              <xs:element xmlns:q15="http://register.nhn.no/Common" minOccurs="0" name="IndustryCodes" nillable="true" type="q15:ArrayOfCode" />
+              <xs:element xmlns:q16="http://register.nhn.no/Common" minOccurs="0" name="Municipality" nillable="true" type="q16:Code" />
+              <xs:element xmlns:q17="http://register.nhn.no/Common" minOccurs="0" name="SectorCode" nillable="true" type="q17:Code" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Organization" nillable="true" type="tns:Organization" />
+      <xs:complexType name="DepartmentUpdate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q18="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q18:ArrayOfElectronicAddress" />
+          <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InternationalNames" nillable="true" type="q19:ArrayOfKeyValueOfCodestringtoqTjEUW" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element xmlns:q20="http://register.nhn.no/Common" minOccurs="0" name="OrganizationalDesignation" nillable="true" type="q20:Code" />
+          <xs:element xmlns:q21="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q21:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q22="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q22:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ReshId" type="xs:int" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q23="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q23:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DepartmentUpdate" nillable="true" type="tns:DepartmentUpdate" />
+      <xs:complexType name="OrganizationCreate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q24="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q24:ArrayOfElectronicAddress" />
+          <xs:element minOccurs="0" name="OrganizationNumber" type="xs:int" />
+          <xs:element xmlns:q25="http://register.nhn.no/Common" minOccurs="0" name="OrganizationalDesignation" nillable="true" type="q25:Code" />
+          <xs:element minOccurs="0" name="ParentReshId" type="xs:int" />
+          <xs:element xmlns:q26="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q26:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q27="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q27:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q28="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q28:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="OrganizationCreate" nillable="true" type="tns:OrganizationCreate" />
+      <xs:complexType name="OrganizationUpdate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q29="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q29:ArrayOfElectronicAddress" />
+          <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InternationalNames" nillable="true" type="q30:ArrayOfKeyValueOfCodestringtoqTjEUW" />
+          <xs:element xmlns:q31="http://register.nhn.no/Common" minOccurs="0" name="Municipality" nillable="true" type="q31:Code" />
+          <xs:element xmlns:q32="http://register.nhn.no/Common" minOccurs="0" name="OrganizationalDesignation" nillable="true" type="q32:Code" />
+          <xs:element xmlns:q33="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q33:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q34="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q34:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ReshId" type="xs:int" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q35="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q35:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="OrganizationUpdate" nillable="true" type="tns:OrganizationUpdate" />
+      <xs:complexType name="ReshSearchParameters">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ResultSize" type="xs:int" />
+          <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/System.Collections.Generic" minOccurs="0" name="SearchConstraints" nillable="true" type="q36:ArrayOfKeyValuePairOfstringstring" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ReshSearchParameters" nillable="true" type="tns:ReshSearchParameters" />
+      <xs:complexType name="ArrayOfBusinessWithConnectedReshUnits">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessWithConnectedReshUnits" nillable="true" type="tns:BusinessWithConnectedReshUnits" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfBusinessWithConnectedReshUnits" nillable="true" type="tns:ArrayOfBusinessWithConnectedReshUnits" />
+      <xs:complexType name="BusinessWithConnectedReshUnits">
+        <xs:sequence>
+          <xs:element xmlns:q37="http://register.nhn.no/Corporate" minOccurs="0" name="Business" nillable="true" type="q37:Business" />
+          <xs:element minOccurs="0" name="ConnectedReshUnits" nillable="true" type="tns:ArrayOfReshUnit" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BusinessWithConnectedReshUnits" nillable="true" type="tns:BusinessWithConnectedReshUnits" />
+      <xs:complexType name="ServiceCreate">
+        <xs:sequence>
+          <xs:element xmlns:q38="http://register.nhn.no/Common" minOccurs="0" name="Attributes" nillable="true" type="q38:ArrayOfCode" />
+          <xs:element xmlns:q39="http://register.nhn.no/Common" minOccurs="0" name="Code" nillable="true" type="q39:Code" />
+          <xs:element minOccurs="0" name="OwnerReshId" type="xs:int" />
+          <xs:element xmlns:q40="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q40:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceCreate" nillable="true" type="tns:ServiceCreate" />
+      <xs:complexType name="ServiceUpdate">
+        <xs:sequence>
+          <xs:element xmlns:q41="http://register.nhn.no/Common" minOccurs="0" name="Attributes" nillable="true" type="q41:ArrayOfCode" />
+          <xs:element xmlns:q42="http://register.nhn.no/Common" minOccurs="0" name="Code" nillable="true" type="q42:Code" />
+          <xs:element minOccurs="0" name="OwnerReshId" type="xs:int" />
+          <xs:element xmlns:q43="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q43:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceUpdate" nillable="true" type="tns:ServiceUpdate" />
+      <xs:complexType name="ParentHistoryData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ForReshUnit" nillable="true" type="tns:ReshUnit" />
+          <xs:element minOccurs="0" name="Parents" nillable="true" type="tns:ArrayOfParentWithLinkPeriod" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ParentHistoryData" nillable="true" type="tns:ParentHistoryData" />
+      <xs:complexType name="ArrayOfParentWithLinkPeriod">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ParentWithLinkPeriod" nillable="true" type="tns:ParentWithLinkPeriod" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfParentWithLinkPeriod" nillable="true" type="tns:ArrayOfParentWithLinkPeriod" />
+      <xs:complexType name="ParentWithLinkPeriod">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Parent" nillable="true" type="tns:ReshUnit" />
+          <xs:element xmlns:q44="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q44:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ParentWithLinkPeriod" nillable="true" type="tns:ParentWithLinkPeriod" />
+      <xs:complexType name="ArrayOfReshMappingNode">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ReshMappingNode" nillable="true" type="tns:ReshMappingNode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfReshMappingNode" nillable="true" type="tns:ArrayOfReshMappingNode" />
+      <xs:complexType name="ReshMappingNode">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ChildNodes" nillable="true" type="tns:ArrayOfReshMappingNode" />
+          <xs:element minOccurs="0" name="ConnectedToReshid" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="MappingNodeId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentMappingNodeId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ReshMappingNode" nillable="true" type="tns:ReshMappingNode" />
+    </xs:schema>
+    <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://register.nhn.no/Common" elementFormDefault="qualified" targetNamespace="http://register.nhn.no/Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="ArrayOfElectronicAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicAddress" nillable="true" type="tns:ElectronicAddress" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfElectronicAddress" nillable="true" type="tns:ArrayOfElectronicAddress" />
+      <xs:complexType name="ElectronicAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Inherited" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastChanged" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Type" nillable="true" type="tns:Code" />
+          <xs:element minOccurs="0" name="TypeCodeValue" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ElectronicAddress" nillable="true" type="tns:ElectronicAddress" />
+      <xs:complexType name="Code">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CodeText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CodeValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OID" type="xs:int" />
+          <xs:element minOccurs="0" name="SimpleType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Code" nillable="true" type="tns:Code" />
+      <xs:complexType name="ArrayOfPhysicalAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="PhysicalAddress" nillable="true" type="tns:PhysicalAddress" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfPhysicalAddress" nillable="true" type="tns:ArrayOfPhysicalAddress" />
+      <xs:complexType name="PhysicalAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Country" nillable="true" type="tns:Code" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Inherited" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastChanged" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PostalCode" type="xs:int" />
+          <xs:element minOccurs="0" name="Postbox" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StreetAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Type" nillable="true" type="tns:Code" />
+          <xs:element minOccurs="0" name="TypeCodeValue" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PhysicalAddress" nillable="true" type="tns:PhysicalAddress" />
+      <xs:complexType name="ArrayOfCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Code" nillable="true" type="tns:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCode" nillable="true" type="tns:ArrayOfCode" />
+      <xs:complexType name="Period">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="From" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="To" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Period" nillable="true" type="tns:Period" />
+      <xs:complexType name="GenericFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GenericFault" nillable="true" type="tns:GenericFault" />
+      <xs:complexType name="ValidationFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfValidationError" />
+          <xs:element minOccurs="0" name="HasErrors" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationFault" nillable="true" type="tns:ValidationFault" />
+      <xs:complexType name="ArrayOfValidationError">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="tns:ValidationError" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfValidationError" nillable="true" type="tns:ArrayOfValidationError" />
+      <xs:complexType name="ValidationError">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PropertyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationError" nillable="true" type="tns:ValidationError" />
+      <xs:complexType name="LatitudeLongitude">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+          <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LatitudeLongitude" nillable="true" type="tns:LatitudeLongitude" />
+      <xs:complexType name="OpeningHours">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FreeText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OpenAt" nillable="true" type="tns:ArrayOfTimePeriod" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="OpeningHours" nillable="true" type="tns:OpeningHours" />
+      <xs:complexType name="ArrayOfTimePeriod">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="TimePeriod" type="tns:TimePeriod" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfTimePeriod" nillable="true" type="tns:ArrayOfTimePeriod" />
+      <xs:complexType name="TimePeriod">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="From" type="ser:duration" />
+          <xs:element minOccurs="0" name="To" type="ser:duration" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="TimePeriod" nillable="true" type="tns:TimePeriod" />
+      <xs:complexType name="CompositeCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ChangedDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CodeText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CodeValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Codes" nillable="true" type="tns:ArrayOfCode" />
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompositeCodeGroupLanguage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompositeCodeGroupName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompositeCodeGroupOID" type="xs:int" />
+          <xs:element minOccurs="0" name="CompositeCodeGroupVersion" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ReplacedCodes" nillable="true" type="tns:ArrayOfCompositeCode" />
+          <xs:element minOccurs="0" name="ReplacingCodes" nillable="true" type="tns:ArrayOfCompositeCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CompositeCode" nillable="true" type="tns:CompositeCode" />
+      <xs:complexType name="ArrayOfCompositeCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CompositeCode" nillable="true" type="tns:CompositeCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCompositeCode" nillable="true" type="tns:ArrayOfCompositeCode" />
+      <xs:complexType name="ArrayOfEntityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EntityLogEntry" nillable="true" type="tns:EntityLogEntry" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfEntityLogEntry" nillable="true" type="tns:ArrayOfEntityLogEntry" />
+      <xs:complexType name="EntityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ByUser" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Changes" nillable="true" type="tns:ArrayOfEntityLogEntryData" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EntityLogEntry" nillable="true" type="tns:EntityLogEntry" />
+      <xs:complexType name="ArrayOfEntityLogEntryData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EntityLogEntryData" nillable="true" type="tns:EntityLogEntryData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfEntityLogEntryData" nillable="true" type="tns:ArrayOfEntityLogEntryData" />
+      <xs:complexType name="EntityLogEntryData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NewValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OldValue" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EntityLogEntryData" nillable="true" type="tns:EntityLogEntryData" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:complexType name="ArrayOfKeyValueOfCodestringtoqTjEUW">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfCodestringtoqTjEUW">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element xmlns:q1="http://register.nhn.no/Common" name="Key" nillable="true" type="q1:Code" />
+                <xs:element name="Value" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfKeyValueOfCodestringtoqTjEUW" nillable="true" type="tns:ArrayOfKeyValueOfCodestringtoqTjEUW" />
+      <xs:complexType name="ArrayOfint">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfint" nillable="true" type="tns:ArrayOfint" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Collections.Generic" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="ArrayOfKeyValuePairOfstringstring">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairOfstringstring" type="tns:KeyValuePairOfstringstring" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfKeyValuePairOfstringstring" nillable="true" type="tns:ArrayOfKeyValuePairOfstringstring" />
+      <xs:complexType name="KeyValuePairOfstringstring">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType Name="KeyValuePairOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+              <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+              <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+            </GenericType>
+            <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="key" nillable="true" type="xs:string" />
+          <xs:element name="value" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="KeyValuePairOfstringstring" nillable="true" type="tns:KeyValuePairOfstringstring" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://register.nhn.no/CommunicationParty" elementFormDefault="qualified" targetNamespace="http://register.nhn.no/CommunicationParty" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" />
+      <xs:complexType name="SearchResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Facets" nillable="true" type="tns:ArrayOfSearchFacet" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/NHN.Palantir.WebServices.Contracts.RESH.Data" minOccurs="0" name="Results" nillable="true" type="q1:ArrayOfReshUnit" />
+          <xs:element minOccurs="0" name="TotalResults" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SearchResult" nillable="true" type="tns:SearchResult" />
+      <xs:complexType name="ArrayOfSearchFacet">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchFacet" nillable="true" type="tns:SearchFacet" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSearchFacet" nillable="true" type="tns:ArrayOfSearchFacet" />
+      <xs:complexType name="SearchFacet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodeValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Entries" nillable="true" type="tns:ArrayOfSearchResultFacetEntry" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SearchFacet" nillable="true" type="tns:SearchFacet" />
+      <xs:complexType name="ArrayOfSearchResultFacetEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchResultFacetEntry" nillable="true" type="tns:SearchResultFacetEntry" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSearchResultFacetEntry" nillable="true" type="tns:ArrayOfSearchResultFacetEntry" />
+      <xs:complexType name="SearchResultFacetEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Hits" type="xs:int" />
+          <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SearchResultFacetEntry" nillable="true" type="tns:SearchResultFacetEntry" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://register.nhn.no/Corporate" elementFormDefault="qualified" targetNamespace="http://register.nhn.no/Corporate" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:import namespace="http://schemas.nhn.no/reg/HTKv1/en" />
+      <xs:complexType name="Business">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Children" nillable="true" type="tns:ArrayOfBusiness" />
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://register.nhn.no/Common" minOccurs="0" name="ElectronicAddresses" nillable="true" type="q1:ArrayOfElectronicAddress" />
+          <xs:element xmlns:q2="http://register.nhn.no/Common" minOccurs="0" name="GeographicalCoordinates" nillable="true" type="q2:LatitudeLongitude" />
+          <xs:element xmlns:q3="http://register.nhn.no/Common" minOccurs="0" name="IndustryCodes" nillable="true" type="q3:ArrayOfCode" />
+          <xs:element minOccurs="0" name="IsGovernmentCompany" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastChanged" type="xs:dateTime" />
+          <xs:element xmlns:q4="http://register.nhn.no/Common" minOccurs="0" name="Municipality" nillable="true" type="q4:Code" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element xmlns:q5="http://register.nhn.no/Common" minOccurs="0" name="OpeningHours" nillable="true" type="q5:OpeningHours" />
+          <xs:element minOccurs="0" name="OrganizationNumber" type="xs:int" />
+          <xs:element minOccurs="0" name="ParentOrganizationName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentOrganizationNumber" nillable="true" type="xs:int" />
+          <xs:element xmlns:q6="http://register.nhn.no/Common" minOccurs="0" name="PhysicalAddresses" nillable="true" type="q6:ArrayOfPhysicalAddress" />
+          <xs:element xmlns:q7="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q7:ArrayOfCode" />
+          <xs:element minOccurs="0" name="ResponsiblePerson" nillable="true" type="xs:string" />
+          <xs:element xmlns:q8="http://register.nhn.no/Common" minOccurs="0" name="SectorCode" nillable="true" type="q8:Code" />
+          <xs:element minOccurs="0" name="Services" nillable="true" type="tns:ArrayOfService" />
+          <xs:element minOccurs="0" name="UpdatedOn" type="xs:dateTime" />
+          <xs:element xmlns:q9="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q9:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Business" nillable="true" type="tns:Business" />
+      <xs:complexType name="ArrayOfBusiness">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Business" nillable="true" type="tns:Business" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfBusiness" nillable="true" type="tns:ArrayOfBusiness" />
+      <xs:complexType name="ArrayOfService">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" nillable="true" type="tns:Service" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfService" nillable="true" type="tns:ArrayOfService" />
+      <xs:complexType name="Service">
+        <xs:sequence>
+          <xs:element xmlns:q10="http://register.nhn.no/Common" minOccurs="0" name="AppliesToMunicipalities" nillable="true" type="q10:ArrayOfCode" />
+          <xs:element xmlns:q11="http://register.nhn.no/Common" minOccurs="0" name="Attributes" nillable="true" type="q11:ArrayOfCode" />
+          <xs:element xmlns:q12="http://register.nhn.no/Common" minOccurs="0" name="Code" nillable="true" type="q12:Code" />
+          <xs:element minOccurs="0" name="Contracts" nillable="true" type="tns:ArrayOfContract" />
+          <xs:element xmlns:q13="http://register.nhn.no/Common" minOccurs="0" name="OpeningHours" nillable="true" type="q13:OpeningHours" />
+          <xs:element minOccurs="0" name="OwnerDisplayName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerHtkDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerReshId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ServiceTypedValues" nillable="true" type="tns:ArrayOfServiceTypedValue" />
+          <xs:element minOccurs="0" name="ServiceVariants" nillable="true" type="tns:ArrayOfServiceVariant" />
+          <xs:element xmlns:q14="http://schemas.nhn.no/reg/HTKv1/en" minOccurs="0" name="Treatment" nillable="true" type="q14:Treatment" />
+          <xs:element xmlns:q15="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q15:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Service" nillable="true" type="tns:Service" />
+      <xs:complexType name="ArrayOfContract">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Contract" nillable="true" type="tns:Contract" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfContract" nillable="true" type="tns:ArrayOfContract" />
+      <xs:complexType name="Contract">
+        <xs:sequence>
+          <xs:element xmlns:q16="http://register.nhn.no/Common" minOccurs="0" name="ContractType" nillable="true" type="q16:CompositeCode" />
+          <xs:element minOccurs="0" name="ContractWith" type="xs:int" />
+          <xs:element minOccurs="0" name="ContractWithName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HasConsiderationCompetence" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element xmlns:q17="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q17:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Contract" nillable="true" type="tns:Contract" />
+      <xs:complexType name="ArrayOfServiceTypedValue">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceTypedValue" nillable="true" type="tns:ServiceTypedValue" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfServiceTypedValue" nillable="true" type="tns:ArrayOfServiceTypedValue" />
+      <xs:complexType name="ServiceTypedValue">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IntValue" type="xs:int" />
+          <xs:element xmlns:q18="http://register.nhn.no/Common" minOccurs="0" name="Type" nillable="true" type="q18:CompositeCode" />
+          <xs:element xmlns:q19="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q19:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceTypedValue" nillable="true" type="tns:ServiceTypedValue" />
+      <xs:complexType name="ArrayOfServiceVariant">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceVariant" nillable="true" type="tns:ServiceVariant" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfServiceVariant" nillable="true" type="tns:ArrayOfServiceVariant" />
+      <xs:complexType name="ServiceVariant">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element xmlns:q20="http://register.nhn.no/Common" minOccurs="0" name="Domain" nillable="true" type="q20:CompositeCode" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element xmlns:q21="http://register.nhn.no/Common" minOccurs="0" name="OfferedTreatmentLevels" nillable="true" type="q21:ArrayOfCompositeCode" />
+          <xs:element minOccurs="0" name="ServiceVariantTypedValue" nillable="true" type="tns:ArrayOfServiceVariantTypedValue" />
+          <xs:element xmlns:q22="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q22:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceVariant" nillable="true" type="tns:ServiceVariant" />
+      <xs:complexType name="ArrayOfServiceVariantTypedValue">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceVariantTypedValue" nillable="true" type="tns:ServiceVariantTypedValue" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfServiceVariantTypedValue" nillable="true" type="tns:ArrayOfServiceVariantTypedValue" />
+      <xs:complexType name="ServiceVariantTypedValue">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IntValue" type="xs:int" />
+          <xs:element xmlns:q23="http://register.nhn.no/Common" minOccurs="0" name="TreatmentLevel" nillable="true" type="q23:CompositeCode" />
+          <xs:element xmlns:q24="http://register.nhn.no/Common" minOccurs="0" name="Type" nillable="true" type="q24:CompositeCode" />
+          <xs:element xmlns:q25="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q25:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceVariantTypedValue" nillable="true" type="tns:ServiceVariantTypedValue" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.nhn.no/reg/HTKv1/en" elementFormDefault="qualified" targetNamespace="http://schemas.nhn.no/reg/HTKv1/en" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:complexType name="Treatment">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://register.nhn.no/Common" minOccurs="0" name="AvailableInDomains" nillable="true" type="q1:ArrayOfCompositeCode" />
+          <xs:element minOccurs="0" name="AvailableTreatmentLevels" nillable="true" type="tns:ArrayOfTreatmentLevelWithDisplayName" />
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://register.nhn.no/Common" minOccurs="0" name="Drg" nillable="true" type="q2:CompositeCode" />
+          <xs:element xmlns:q3="http://register.nhn.no/Common" minOccurs="0" name="Icd10" nillable="true" type="q3:CompositeCode" />
+          <xs:element xmlns:q4="http://register.nhn.no/Common" minOccurs="0" name="Icpc2" nillable="true" type="q4:CompositeCode" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element xmlns:q5="http://register.nhn.no/Common" minOccurs="0" name="Mesh" nillable="true" type="q5:CompositeCode" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element xmlns:q6="http://register.nhn.no/Common" minOccurs="0" name="NcspNcmp" nillable="true" type="q6:CompositeCode" />
+          <xs:element xmlns:q7="http://register.nhn.no/Common" minOccurs="0" name="Properties" nillable="true" type="q7:ArrayOfCompositeCode" />
+          <xs:element xmlns:q8="http://register.nhn.no/Common" minOccurs="0" name="Type" nillable="true" type="q8:CompositeCode" />
+          <xs:element xmlns:q9="http://register.nhn.no/Common" minOccurs="0" name="Valid" nillable="true" type="q9:Period" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Treatment" nillable="true" type="tns:Treatment" />
+      <xs:complexType name="ArrayOfTreatmentLevelWithDisplayName">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="TreatmentLevelWithDisplayName" nillable="true" type="tns:TreatmentLevelWithDisplayName" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfTreatmentLevelWithDisplayName" nillable="true" type="tns:ArrayOfTreatmentLevelWithDisplayName" />
+      <xs:complexType name="TreatmentLevelWithDisplayName">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q10="http://register.nhn.no/Common" minOccurs="0" name="TreatmentLevel" nillable="true" type="q10:CompositeCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="TreatmentLevelWithDisplayName" nillable="true" type="tns:TreatmentLevelWithDisplayName" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://register.nhn.no/RESH" elementFormDefault="qualified" targetNamespace="http://register.nhn.no/RESH" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://register.nhn.no/Common" />
+      <xs:complexType name="ArrayOfParentLink">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ParentLink" nillable="true" type="tns:ParentLink" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfParentLink" nillable="true" type="tns:ArrayOfParentLink" />
+      <xs:complexType name="ParentLink">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ParentReshId" type="xs:int" />
+          <xs:element xmlns:q1="http://register.nhn.no/Common" minOccurs="0" name="Period" nillable="true" type="q1:Period" />
+          <xs:element minOccurs="0" name="ReshId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ParentLink" nillable="true" type="tns:ParentLink" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IReshService_CreateDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDepartment" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateDepartment_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://register.nhn.no/Common" name="detail" element="q1:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateDepartment_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://register.nhn.no/Common" name="detail" element="q2:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDepartment" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateDepartment_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://register.nhn.no/Common" name="detail" element="q3:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateDepartment_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://register.nhn.no/Common" name="detail" element="q4:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_MoveDepartment_InputMessage">
+    <wsdl:part name="parameters" element="tns:MoveDepartment" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_MoveDepartment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MoveDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_MoveDepartment_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://register.nhn.no/Common" name="detail" element="q5:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_MoveDepartment_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://register.nhn.no/Common" name="detail" element="q6:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateOrganization_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrganization" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateOrganization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrganizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateOrganization_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://register.nhn.no/Common" name="detail" element="q7:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateOrganization_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://register.nhn.no/Common" name="detail" element="q8:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateOrganization_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrganization" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateOrganization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrganizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateOrganization_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://register.nhn.no/Common" name="detail" element="q9:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateOrganization_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://register.nhn.no/Common" name="detail" element="q10:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AdvancedSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:AdvancedSearch" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AdvancedSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AdvancedSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AdvancedSearch_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://register.nhn.no/Common" name="detail" element="q11:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_Search_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_Search_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_Search_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://register.nhn.no/Common" name="detail" element="q12:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReshUnit" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReshUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnit_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://register.nhn.no/Common" name="detail" element="q13:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnit_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://register.nhn.no/Common" name="detail" element="q14:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnitWithInactiveChildren_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReshUnitWithInactiveChildren" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnitWithInactiveChildren_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReshUnitWithInactiveChildrenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnitWithInactiveChildren_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://register.nhn.no/Common" name="detail" element="q15:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetReshUnitWithInactiveChildren_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://register.nhn.no/Common" name="detail" element="q16:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetTreatmentFacilityTree_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTreatmentFacilityTree" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetTreatmentFacilityTree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTreatmentFacilityTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetTreatmentFacilityTree_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://register.nhn.no/Common" name="detail" element="q17:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetTreatmentFacilityTree_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://register.nhn.no/Common" name="detail" element="q18:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateService_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateService" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateService_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateService_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://register.nhn.no/Common" name="detail" element="q19:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateService_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://register.nhn.no/Common" name="detail" element="q20:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateService_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateService" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateService_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateService_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://register.nhn.no/Common" name="detail" element="q21:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateService_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://register.nhn.no/Common" name="detail" element="q22:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_ConnectReshUnitToTreatmentFacility_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectReshUnitToTreatmentFacility" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_ConnectReshUnitToTreatmentFacility_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectReshUnitToTreatmentFacilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_ConnectReshUnitToTreatmentFacility_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://register.nhn.no/Common" name="detail" element="q23:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_ConnectReshUnitToTreatmentFacility_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://register.nhn.no/Common" name="detail" element="q24:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DisconnectReshUnitFromTreatmentFacility_InputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectReshUnitFromTreatmentFacility" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DisconnectReshUnitFromTreatmentFacility_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectReshUnitFromTreatmentFacilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DisconnectReshUnitFromTreatmentFacility_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://register.nhn.no/Common" name="detail" element="q25:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DisconnectReshUnitFromTreatmentFacility_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://register.nhn.no/Common" name="detail" element="q26:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetOrganizationByOrganizationNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrganizationByOrganizationNumber" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetOrganizationByOrganizationNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrganizationByOrganizationNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetOrganizationByOrganizationNumber_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://register.nhn.no/Common" name="detail" element="q27:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetOrganizationByOrganizationNumber_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://register.nhn.no/Common" name="detail" element="q28:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AddCustomAttribute_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomAttribute" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AddCustomAttribute_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomAttributeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AddCustomAttribute_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://register.nhn.no/Common" name="detail" element="q29:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_AddCustomAttribute_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://register.nhn.no/Common" name="detail" element="q30:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_RemoveCustomAttribute_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCustomAttribute" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_RemoveCustomAttribute_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCustomAttributeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_RemoveCustomAttribute_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://register.nhn.no/Common" name="detail" element="q31:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_RemoveCustomAttribute_ValidationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://register.nhn.no/Common" name="detail" element="q32:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetChangeLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetChangeLog" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetChangeLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetChangeLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetChangeLog_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://register.nhn.no/Common" name="detail" element="q33:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetParentHistoryForReshUnit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParentHistoryForReshUnit" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetParentHistoryForReshUnit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParentHistoryForReshUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetParentHistoryForReshUnit_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://register.nhn.no/Common" name="detail" element="q34:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetAllMappingNodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllMappingNodes" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetAllMappingNodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllMappingNodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetAllMappingNodes_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://register.nhn.no/Common" name="detail" element="q35:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNode" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNode_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://register.nhn.no/Common" name="detail" element="q36:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodesUnderReshId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNodesUnderReshId" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodesUnderReshId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNodesUnderReshIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodesUnderReshId_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://register.nhn.no/Common" name="detail" element="q37:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateMappingNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMappingNode" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateMappingNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMappingNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_CreateMappingNode_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://register.nhn.no/Common" name="detail" element="q38:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateMappingNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMappingNode" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateMappingNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMappingNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_UpdateMappingNode_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://register.nhn.no/Common" name="detail" element="q39:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DeleteMappingNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMappingNode" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DeleteMappingNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMappingNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_DeleteMappingNode_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://register.nhn.no/Common" name="detail" element="q40:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodeDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNodeDetail" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodeDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMappingNodeDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetMappingNodeDetail_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://register.nhn.no/Common" name="detail" element="q41:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedReshIds_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetModifiedReshIds" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedReshIds_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetModifiedReshIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedReshIds_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://register.nhn.no/Common" name="detail" element="q42:GenericFault" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedParentLinks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetModifiedParentLinks" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedParentLinks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetModifiedParentLinksResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReshService_GetModifiedParentLinks_GenericFaultFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://register.nhn.no/Common" name="detail" element="q43:GenericFault" />
+  </wsdl:message>
+  <wsdl:portType name="IReshService">
+    <wsdl:operation name="CreateDepartment">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/CreateDepartment" message="tns:IReshService_CreateDepartment_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/CreateDepartmentResponse" message="tns:IReshService_CreateDepartment_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateDepartmentGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_CreateDepartment_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateDepartmentValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_CreateDepartment_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateDepartment" message="tns:IReshService_UpdateDepartment_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateDepartmentResponse" message="tns:IReshService_UpdateDepartment_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateDepartmentGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_UpdateDepartment_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateDepartmentValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_UpdateDepartment_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveDepartment">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/MoveDepartment" message="tns:IReshService_MoveDepartment_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/MoveDepartmentResponse" message="tns:IReshService_MoveDepartment_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/MoveDepartmentGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_MoveDepartment_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/MoveDepartmentValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_MoveDepartment_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrganization">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/CreateOrganization" message="tns:IReshService_CreateOrganization_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/CreateOrganizationResponse" message="tns:IReshService_CreateOrganization_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateOrganizationGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_CreateOrganization_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateOrganizationValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_CreateOrganization_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrganization">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateOrganization" message="tns:IReshService_UpdateOrganization_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateOrganizationResponse" message="tns:IReshService_UpdateOrganization_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateOrganizationGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_UpdateOrganization_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateOrganizationValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_UpdateOrganization_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AdvancedSearch">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/AdvancedSearch" message="tns:IReshService_AdvancedSearch_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/AdvancedSearchResponse" message="tns:IReshService_AdvancedSearch_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/AdvancedSearchGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_AdvancedSearch_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/Search" message="tns:IReshService_Search_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/SearchResponse" message="tns:IReshService_Search_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/SearchGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_Search_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnit">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnit" message="tns:IReshService_GetReshUnit_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitResponse" message="tns:IReshService_GetReshUnit_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetReshUnit_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_GetReshUnit_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnitWithInactiveChildren">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildren" message="tns:IReshService_GetReshUnitWithInactiveChildren_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildrenResponse" message="tns:IReshService_GetReshUnitWithInactiveChildren_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildrenGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetReshUnitWithInactiveChildren_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildrenValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_GetReshUnitWithInactiveChildren_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTreatmentFacilityTree">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTree" message="tns:IReshService_GetTreatmentFacilityTree_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTreeResponse" message="tns:IReshService_GetTreatmentFacilityTree_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTreeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetTreatmentFacilityTree_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTreeValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_GetTreatmentFacilityTree_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateService">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/CreateService" message="tns:IReshService_CreateService_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/CreateServiceResponse" message="tns:IReshService_CreateService_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateServiceGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_CreateService_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateServiceValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_CreateService_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateService">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateService" message="tns:IReshService_UpdateService_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateServiceResponse" message="tns:IReshService_UpdateService_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateServiceGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_UpdateService_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateServiceValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_UpdateService_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConnectReshUnitToTreatmentFacility">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacility" message="tns:IReshService_ConnectReshUnitToTreatmentFacility_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacilityResponse" message="tns:IReshService_ConnectReshUnitToTreatmentFacility_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacilityGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_ConnectReshUnitToTreatmentFacility_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacilityValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_ConnectReshUnitToTreatmentFacility_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectReshUnitFromTreatmentFacility">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacility" message="tns:IReshService_DisconnectReshUnitFromTreatmentFacility_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacilityResponse" message="tns:IReshService_DisconnectReshUnitFromTreatmentFacility_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacilityGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_DisconnectReshUnitFromTreatmentFacility_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacilityValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_DisconnectReshUnitFromTreatmentFacility_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizationByOrganizationNumber">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumber" message="tns:IReshService_GetOrganizationByOrganizationNumber_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumberResponse" message="tns:IReshService_GetOrganizationByOrganizationNumber_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumberGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetOrganizationByOrganizationNumber_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumberValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_GetOrganizationByOrganizationNumber_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomAttribute">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/AddCustomAttribute" message="tns:IReshService_AddCustomAttribute_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/AddCustomAttributeResponse" message="tns:IReshService_AddCustomAttribute_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/AddCustomAttributeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_AddCustomAttribute_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/AddCustomAttributeValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_AddCustomAttribute_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomAttribute">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/RemoveCustomAttribute" message="tns:IReshService_RemoveCustomAttribute_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/RemoveCustomAttributeResponse" message="tns:IReshService_RemoveCustomAttribute_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/RemoveCustomAttributeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_RemoveCustomAttribute_GenericFaultFault_FaultMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/RemoveCustomAttributeValidationFaultFault" name="ValidationFaultFault" message="tns:IReshService_RemoveCustomAttribute_ValidationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChangeLog">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetChangeLog" message="tns:IReshService_GetChangeLog_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetChangeLogResponse" message="tns:IReshService_GetChangeLog_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetChangeLogGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetChangeLog_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParentHistoryForReshUnit">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnit" message="tns:IReshService_GetParentHistoryForReshUnit_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnitResponse" message="tns:IReshService_GetParentHistoryForReshUnit_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnitGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetParentHistoryForReshUnit_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMappingNodes">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetAllMappingNodes" message="tns:IReshService_GetAllMappingNodes_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetAllMappingNodesResponse" message="tns:IReshService_GetAllMappingNodes_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetAllMappingNodesGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetAllMappingNodes_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNode">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNode" message="tns:IReshService_GetMappingNode_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodeResponse" message="tns:IReshService_GetMappingNode_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetMappingNode_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodesUnderReshId">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshId" message="tns:IReshService_GetMappingNodesUnderReshId_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshIdResponse" message="tns:IReshService_GetMappingNodesUnderReshId_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshIdGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetMappingNodesUnderReshId_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMappingNode">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/CreateMappingNode" message="tns:IReshService_CreateMappingNode_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/CreateMappingNodeResponse" message="tns:IReshService_CreateMappingNode_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/CreateMappingNodeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_CreateMappingNode_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMappingNode">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateMappingNode" message="tns:IReshService_UpdateMappingNode_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateMappingNodeResponse" message="tns:IReshService_UpdateMappingNode_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/UpdateMappingNodeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_UpdateMappingNode_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMappingNode">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/DeleteMappingNode" message="tns:IReshService_DeleteMappingNode_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/DeleteMappingNodeResponse" message="tns:IReshService_DeleteMappingNode_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/DeleteMappingNodeGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_DeleteMappingNode_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodeDetail">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetail" message="tns:IReshService_GetMappingNodeDetail_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetailResponse" message="tns:IReshService_GetMappingNodeDetail_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetailGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetMappingNodeDetail_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedReshIds">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedReshIds" message="tns:IReshService_GetModifiedReshIds_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedReshIdsResponse" message="tns:IReshService_GetModifiedReshIds_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedReshIdsGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetModifiedReshIds_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedParentLinks">
+      <wsdl:input wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinks" message="tns:IReshService_GetModifiedParentLinks_InputMessage" />
+      <wsdl:output wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinksResponse" message="tns:IReshService_GetModifiedParentLinks_OutputMessage" />
+      <wsdl:fault wsam:Action="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinksGenericFaultFault" name="GenericFaultFault" message="tns:IReshService_GetModifiedParentLinks_GenericFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IReshService" type="tns:IReshService">
+    <wsp:PolicyReference URI="#WSHttpBinding_IReshService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MoveDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/MoveDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrganization">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateOrganization" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrganization">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateOrganization" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AdvancedSearch">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/AdvancedSearch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/Search" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnit">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnitWithInactiveChildren">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildren" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTreatmentFacilityTree">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTree" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateService">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateService">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConnectReshUnitToTreatmentFacility">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectReshUnitFromTreatmentFacility">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizationByOrganizationNumber">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomAttribute">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/AddCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomAttribute">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/RemoveCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetChangeLog">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetChangeLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentHistoryForReshUnit">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMappingNodes">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetAllMappingNodes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodesUnderReshId">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/DeleteMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodeDetail">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedReshIds">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedReshIds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedParentLinks">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IReshService" type="tns:IReshService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReshService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="CreateDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MoveDepartment">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/MoveDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrganization">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateOrganization" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrganization">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateOrganization" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AdvancedSearch">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/AdvancedSearch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/Search" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnit">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnitWithInactiveChildren">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildren" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTreatmentFacilityTree">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTree" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateService">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateService">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConnectReshUnitToTreatmentFacility">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectReshUnitFromTreatmentFacility">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizationByOrganizationNumber">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomAttribute">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/AddCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomAttribute">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/RemoveCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap12:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetChangeLog">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetChangeLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentHistoryForReshUnit">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMappingNodes">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetAllMappingNodes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodesUnderReshId">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMappingNode">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/DeleteMappingNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodeDetail">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedReshIds">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedReshIds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedParentLinks">
+      <soap12:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap12:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IReshService" type="tns:IReshService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IReshService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateDepartment">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDepartment">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MoveDepartment">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/MoveDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrganization">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateOrganization" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrganization">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateOrganization" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AdvancedSearch">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/AdvancedSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/Search" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnit">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetReshUnitWithInactiveChildren">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetReshUnitWithInactiveChildren" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTreatmentFacilityTree">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetTreatmentFacilityTree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateService">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateService">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConnectReshUnitToTreatmentFacility">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/ConnectReshUnitToTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DisconnectReshUnitFromTreatmentFacility">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/DisconnectReshUnitFromTreatmentFacility" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrganizationByOrganizationNumber">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetOrganizationByOrganizationNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomAttribute">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/AddCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCustomAttribute">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/RemoveCustomAttribute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFaultFault">
+        <soap:fault use="literal" name="ValidationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetChangeLog">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetChangeLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetParentHistoryForReshUnit">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetParentHistoryForReshUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMappingNodes">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetAllMappingNodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNode">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodesUnderReshId">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodesUnderReshId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMappingNode">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/CreateMappingNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMappingNode">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/UpdateMappingNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMappingNode">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/DeleteMappingNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMappingNodeDetail">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetMappingNodeDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedReshIds">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedReshIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetModifiedParentLinks">
+      <soap:operation soapAction="http://register.nhn.no/Resh/IReshService/GetModifiedParentLinks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="GenericFaultFault">
+        <soap:fault use="literal" name="GenericFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Resh">
+    <wsdl:port name="WSHttpBinding_IReshService" binding="tns:WSHttpBinding_IReshService">
+      <soap12:address location="https://ws-web.test.nhn.no/v1/RESH" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://ws-web.test.nhn.no/v1/RESH</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IReshService" binding="tns:NetTcpBinding_IReshService">
+      <soap12:address location="net.tcp://ws-web.test.nhn.no:9876/v1/RESH" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://ws-web.test.nhn.no:9876/v1/RESH</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>ws-web.test.nhn.no</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IReshService" binding="tns:BasicHttpBinding_IReshService">
+      <soap:address location="https://ws-web.test.nhn.no/v1/RESH/Basic" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
